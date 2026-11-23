@@ -1,0 +1,414 @@
+<title>Мой стиль-гайд</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Onest:wght@400;500;600&display=swap">
+<style>
+/* Layout: одна колонка-справочник, секции с крупным заголовком слева на широком экране; палитры как главные визуальные блоки */
+:root{
+  --bg:#F6EEE8;
+  --surface:#FFFAF6;
+  --fg:#2B1D17;
+  --muted:#7A6258;
+  --line:#E4D3C7;
+  --accent:#A8452C;
+  --ok:#3E6B45;
+  --no:#A33A3A;
+  --display:'Literata',Georgia,serif;
+  --body:'Onest',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1D1512;--surface:#291E19;--fg:#F3E6DC;--muted:#B39C8F;--line:#41322B;--accent:#E58A63;--ok:#8CC393;--no:#EE8C84;color-scheme:dark}
+}
+:root[data-theme="dark"]{
+  --bg:#1D1512;--surface:#291E19;--fg:#F3E6DC;--muted:#B39C8F;--line:#41322B;--accent:#E58A63;--ok:#8CC393;--no:#EE8C84;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 var(--body);
+  padding-block:0 4rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,7vw,4rem);line-height:1.05;letter-spacing:-.02em}
+h2{font-size:clamp(1.6rem,4vw,2.2rem);line-height:1.15}
+h3{font-size:1.05rem;font-family:var(--body);font-weight:600;margin-bottom:.5rem}
+p{margin:0 0 .75rem;max-width:65ch}
+.eyebrow{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+header{padding-block:3rem 2rem;display:grid;gap:1.25rem}
+.formula{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-family:var(--display);font-size:1.15rem}
+.formula span.x{color:var(--accent)}
+.lead{font-family:var(--display);font-size:1.2rem;font-style:italic;color:var(--muted);max-width:56ch}
+.strip{display:flex;height:44px;border-radius:6px;overflow:hidden;margin-top:.5rem}
+.strip i{flex:1}
+
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-block:1px solid var(--line);z-index:5;
+  display:flex;gap:1.1rem;overflow-x:auto;padding:.7rem 0;margin-bottom:1rem;font-size:.9rem;white-space:nowrap}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover,nav a:focus-visible{color:var(--accent)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+
+section{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:1.5rem 2.5rem;padding-block:2.5rem;border-bottom:1px solid var(--line)}
+section>h2{align-self:start;position:static}
+@media(max-width:720px){section{grid-template-columns:minmax(0,1fr)}}
+.body{display:grid;gap:1.5rem;min-width:0}
+
+.sw{display:flex;flex-wrap:wrap;gap:.6rem}
+.sw div{width:64px}
+.sw b{display:block;height:48px;border-radius:6px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.sw small{display:block;margin-top:.25rem;font-size:.7rem;color:var(--muted);line-height:1.2;font-variant-numeric:tabular-nums}
+.sw.avoid b{position:relative}
+.sw.avoid b::after{content:"";position:absolute;inset:0;background:linear-gradient(to top right,transparent calc(50% - 1px),rgba(163,58,58,.9) calc(50% - 1px),rgba(163,58,58,.9) calc(50% + 1px),transparent calc(50% + 1px))}
+
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.col{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:1rem 1.1rem;min-width:0}
+.col ul,.list{margin:0;padding-left:1.1rem}
+.col li,.list li{margin-bottom:.25rem}
+.yes h3{color:var(--ok)}
+.maybe h3{color:var(--muted)}
+.no h3{color:var(--no)}
+.tag{display:inline-block;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-bottom:.4rem}
+
+.fuse{width:100%;border-collapse:collapse;font-size:.92rem}
+.fuse th,.fuse td{text-align:left;vertical-align:top;padding:.65rem .75rem;border-bottom:1px solid var(--line)}
+.fuse th{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.fuse td:first-child{font-weight:600;white-space:nowrap}
+.scroll{overflow-x:auto}
+
+.q{display:flex;gap:.6rem;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:.55rem .55rem .55rem .85rem;margin-bottom:.45rem;min-width:0}
+.q span{min-width:0;overflow-wrap:anywhere;font-size:.92rem}
+button{font:inherit;font-size:.8rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:5px;padding:.3rem .7rem;cursor:pointer;flex:none}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.check{display:grid;gap:.5rem;padding:0;margin:0;list-style:none}
+.check label{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer}
+.check input{margin-top:.3rem;accent-color:var(--accent)}
+.score{font-family:var(--display);font-size:1.1rem;margin-top:.75rem;color:var(--accent)}
+.note{font-size:.85rem;color:var(--muted)}
+footer{padding-top:2rem;font-size:.8rem;color:var(--muted)}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Личный стиль-гайд</div>
+  <h1>Тёплая глубина,<br>мягкие линии</h1>
+  <div class="formula"><span>True Autumn</span><span class="x">×</span><span>Натурал-романтик</span></div>
+  <p class="lead">Цвета осени, силуэты и фактуры романтика: насыщенно по цвету, воздушно по форме, без острых углов и холодного блеска.</p>
+  <div class="strip" aria-hidden="true">
+    <i style="background:#F5F2E6"></i><i style="background:#E0C5A8"></i><i style="background:#F7B26B"></i><i style="background:#DD7A41"></i><i style="background:#C14E3B"></i><i style="background:#A83444"></i><i style="background:#632F57"></i><i style="background:#214B5C"></i><i style="background:#284F39"></i><i style="background:#6B5B2C"></i><i style="background:#86543F"></i><i style="background:#3B3A35"></i>
+  </div>
+</header>
+
+<nav aria-label="Разделы">
+  <a href="#formula">Формула</a><a href="#colors">Цвета</a><a href="#fabrics">Ткани</a><a href="#silhouette">Силуэты</a><a href="#prints">Принты</a><a href="#jewelry">Украшения</a><a href="#hair">Волосы</a><a href="#makeup">Макияж</a><a href="#pinterest">Pinterest</a>
+</nav>
+
+<section id="formula">
+  <h2>Как совмещаются два типажа</h2>
+  <div class="body">
+    <p>Цветотип говорит, <b>какого цвета</b> и какой насыщенности вещь. Кибби говорит, <b>какой формы</b> она и как лежит на теле. Они почти не спорят, кроме ткани.</p>
+    <div class="scroll"><table class="fuse">
+      <tr><th>Параметр</th><th>От True Autumn</th><th>От Натурал-романтика</th><th>Итог</th></tr>
+      <tr><td>Цвет</td><td>тёплый, насыщенный, природный</td><td>мягкий, без резких контрастов</td><td>терракота, карамель, оливка, бордо, изумруд</td></tr>
+      <tr><td>Форма</td><td>плотные, объёмные, округлые</td><td>свободные, летящие, расслабленные</td><td>драпировка, юбки, рюши, мягкие вырезы</td></tr>
+      <tr><td>Ткань</td><td>матовая, фактурная, без блеска</td><td>струящаяся, нежная</td><td>мягкая фактура с падающим силуэтом</td></tr>
+      <tr><td>Принт</td><td>этнические, растительные, леопард</td><td>цветы, акварель, бохо, кружево</td><td>цветочные в тёплой гамме, мягкий леопард</td></tr>
+      <tr><td>Украшения</td><td>тёплое золото, янтарь, медь</td><td>цветы, капли, банты, многослойность</td><td>золото в мягких формах</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="colors">
+  <h2>Цвета</h2>
+  <div class="body">
+    <div><h3>Нейтралы</h3>
+      <div class="sw">
+        <div><b style="background:#F5F2E6"></b><small>айвори</small></div>
+        <div><b style="background:#E0C5A8"></b><small>песочный</small></div>
+        <div><b style="background:#6E3E30"></b><small>шоколад</small></div>
+        <div><b style="background:#8E3F2E"></b><small>ржавый</small></div>
+        <div><b style="background:#3B3A35"></b><small>тёплый уголь</small></div>
+      </div></div>
+    <div><h3>Основные цвета одежды</h3>
+      <div class="sw">
+        <div><b style="background:#F6BEA8"></b><small>персик</small></div>
+        <div><b style="background:#B08568"></b><small>кэмел</small></div>
+        <div><b style="background:#F7B26B"></b><small>мёд</small></div>
+        <div><b style="background:#DD7A41"></b><small>тыква</small></div>
+        <div><b style="background:#C14E3B"></b><small>терракота</small></div>
+        <div><b style="background:#C2372F"></b><small>кирпично-красный</small></div>
+        <div><b style="background:#A83444"></b><small>гранат</small></div>
+        <div><b style="background:#214B5C"></b><small>тёмная бирюза</small></div>
+        <div><b style="background:#632F57"></b><small>слива</small></div>
+        <div><b style="background:#484035"></b><small>тёмный хаки</small></div>
+        <div><b style="background:#6B5B2C"></b><small>болотный</small></div>
+        <div><b style="background:#A09944"></b><small>оливка</small></div>
+        <div><b style="background:#C08A4B"></b><small>карамель</small></div>
+        <div><b style="background:#86543F"></b><small>какао</small></div>
+        <div><b style="background:#284F39"></b><small>хвоя</small></div>
+      </div></div>
+    <div><h3>Худшие цвета</h3>
+      <div class="sw avoid">
+        <div><b style="background:#C0C8FF"></b><small>холодный голубой</small></div>
+        <div><b style="background:#3A2FF5"></b><small>электрик</small></div>
+        <div><b style="background:#E3FF0C"></b><small>неон-лайм</small></div>
+        <div><b style="background:#FCD0F5"></b><small>холодный розовый</small></div>
+        <div><b style="background:#9EFFD9"></b><small>мята</small></div>
+      </div>
+      <p class="note" style="margin-top:.6rem">Также избегать чисто-белого, лавандового и серебристо-серого. Вместо белого брать айвори и молочный.</p></div>
+    <p class="note">Цвета подобраны по образцам из твоих материалов, оттенки на экране приблизительные.</p>
+  </div>
+</section>
+
+<section id="fabrics">
+  <h2>Ткани</h2>
+  <div class="body">
+    <p>Два гайда советуют противоположное. Правило компромисса: ткань должна <b>падать и двигаться</b>, но выглядеть <b>матово и тепло</b>.</p>
+    <div class="cols">
+      <div class="col yes"><h3>Идеально</h3><ul>
+        <li>лён мягкой выработки, вискоза</li>
+        <li>хлопок: батист, муслин, поплин</li>
+        <li>вельвет и мягкий бархат</li>
+        <li>тонкий трикотаж, джерси</li>
+        <li>кружево, гипюр, ажур</li>
+        <li>шерсть мягкая: кашемир, альпака, мохер</li>
+        <li>мягкая замша</li>
+        <li>шёлк и атлас матовый, в тёплых тонах</li>
+      </ul></div>
+      <div class="col maybe"><h3>Допустимо</h3><ul>
+        <li>смесовые: хлопок + шерсть</li>
+        <li>хлопковый бархат</li>
+        <li>мягкая кожа</li>
+        <li>шифон и органза в тёплых оттенках, без глянца</li>
+        <li>деним, если он свободного кроя</li>
+      </ul></div>
+      <div class="col no"><h3>Избегать</h3><ul>
+        <li>жёсткие: твид, габардин, плотный брезент</li>
+        <li>глянцевый атлас холодных цветов</li>
+        <li>парча, скользкий синтетический блеск</li>
+        <li>тугие облегающие ткани без мягкости</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="silhouette">
+  <h2>Силуэты и вырезы</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col yes"><h3>Да</h3><ul>
+        <li>платья и юбки макси и миди</li>
+        <li>свободные, летящие, расслабленные формы</li>
+        <li>рюши, воланы, драпировки, завязки</li>
+        <li>блузки с бантом или жабо</li>
+        <li>мягкий облегающий крой по фигуре, без жёсткости</li>
+      </ul></div>
+      <div class="col no"><h3>Нет</h3><ul>
+        <li>«мужские» и пацанские образы</li>
+        <li>строгие костюмы</li>
+        <li>графичные линии, геометрия, острые углы</li>
+        <li>жёсткие воротники-стойки</li>
+      </ul></div>
+    </div>
+    <div><h3>Вырезы и воротники</h3>
+      <p>Мягкий вырез-сердечко, лодочка, круглый, V с мягкой линией, бант-галстук, жабо, круглый воротник с мягким отворотом.</p></div>
+    <div><h3>Очки</h3>
+      <p>Тонкая оправа, мягкие линии, прямоугольные или слегка квадратные, небольшой и средний объём.</p></div>
+  </div>
+</section>
+
+<section id="prints">
+  <h2>Принты</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col yes"><h3>Подходит</h3><ul>
+        <li>цветочные, средние и крупные, плавные линии</li>
+        <li>акварельные, слегка размытые</li>
+        <li>растительные: листья, ветки</li>
+        <li>леопард мягкого тона, зебра</li>
+        <li>кружево как рисунок</li>
+        <li>этника и бохо с «ручным» эффектом</li>
+        <li>полоска, горох, клетка в тёплой гамме</li>
+      </ul></div>
+      <div class="col no"><h3>Не подходит</h3><ul>
+        <li>резкая графика, чёткая геометрия</li>
+        <li>холодная пастель: голубой, лавандовый, мятный</li>
+        <li>агрессивный контраст чёрного и белого</li>
+        <li>неоновые и кислотные принты</li>
+      </ul></div>
+    </div>
+    <p class="note">Если принт цветочный, переведи его в тёплую гамму: терракота, бордо, оливка, горчица, на кремовом или тёмно-зелёном фоне.</p>
+  </div>
+</section>
+
+<section id="jewelry">
+  <h2>Украшения</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col yes"><h3>Металл и камни</h3><ul>
+        <li>жёлтое тёплое золото, античная бронза, латунь, медь</li>
+        <li>янтарь, тигровый глаз, гранат, яшма</li>
+        <li>тёплый изумруд, цитрин, дымчатый кварц</li>
+        <li>жемчуг тёплого оттенка</li>
+      </ul></div>
+      <div class="col yes"><h3>Формы</h3><ul>
+        <li>цветы, сердца, банты, капли</li>
+        <li>массивные плавные серьги и кольца</li>
+        <li>многослойные цепочки</li>
+        <li>природные силуэты</li>
+      </ul></div>
+      <div class="col no"><h3>Избегать</h3><ul>
+        <li>холодное серебро и «белый» отлив</li>
+        <li>острые углы, хрупкие тонкие формы</li>
+        <li>геометрия и жёсткие линии</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="hair">
+  <h2>Волосы</h2>
+  <div class="body">
+    <div><h3>Оттенки</h3>
+      <div class="sw">
+        <div><b style="background:#3A2B22"></b><small>тёмный шоколад</small></div>
+        <div><b style="background:#4F3426"></b><small>каштан</small></div>
+        <div><b style="background:#7A4A30"></b><small>тёплый коричневый</small></div>
+        <div><b style="background:#8A3A28"></b><small>медный</small></div>
+        <div><b style="background:#5E2330"></b><small>бордо</small></div>
+        <div><b style="background:#B58A58"></b><small>карамель</small></div>
+      </div>
+      <p class="note" style="margin-top:.6rem">Без холодного пепла и серости. В цвете должна быть плотность и тепло.</p></div>
+    <div class="cols">
+      <div class="col yes"><h3>Укладки</h3><ul>
+        <li>длинные прямые гладкие</li>
+        <li>лёгкая волна и крупные локоны</li>
+        <li>голливудская волна</li>
+        <li>аккуратный пучок, slick-back для вечера</li>
+      </ul></div>
+      <div class="col yes"><h3>Окрашивание</h3><ul>
+        <li>тёплый балаяж в тёмных оттенках</li>
+        <li>брондирование</li>
+        <li>мягкие переходы без резкой границы</li>
+      </ul></div>
+    </div>
+    <div><h3>Маникюр</h3>
+      <div class="sw">
+        <div><b style="background:#C98A65"></b><small>карамель</small></div>
+        <div><b style="background:#A96A35"></b><small>медовый</small></div>
+        <div><b style="background:#9A4118"></b><small>терракота</small></div>
+        <div><b style="background:#4F2312"></b><small>шоколад</small></div>
+        <div><b style="background:#4A1018"></b><small>винный</small></div>
+        <div><b style="background:#14301B"></b><small>хвоя</small></div>
+        <div><b style="background:#505522"></b><small>олива</small></div>
+        <div><b style="background:#183B6B"></b><small>тёмно-синий</small></div>
+        <div><b style="background:#B81E0E"></b><small>красный</small></div>
+      </div></div>
+  </div>
+</section>
+
+<section id="makeup">
+  <h2>Макияж</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col"><h3>Тени</h3>
+        <div class="sw"><div style="width:44px"><b style="background:#9A4A24;height:34px"></b></div><div style="width:44px"><b style="background:#B87028;height:34px"></b></div><div style="width:44px"><b style="background:#8A444A;height:34px"></b></div><div style="width:44px"><b style="background:#EAD8A8;height:34px"></b></div><div style="width:44px"><b style="background:#5C5245;height:34px"></b></div><div style="width:44px"><b style="background:#275B2C;height:34px"></b></div></div>
+        <p class="note" style="margin-top:.5rem">Терракота, карамель, золото, тёплый коричневый, хвойный зелёный.</p></div>
+      <div class="col"><h3>Румяна</h3>
+        <div class="sw"><div style="width:44px"><b style="background:#DD7070;height:34px"></b></div><div style="width:44px"><b style="background:#E07458;height:34px"></b></div><div style="width:44px"><b style="background:#D85040;height:34px"></b></div><div style="width:44px"><b style="background:#D4743F;height:34px"></b></div></div>
+        <p class="note" style="margin-top:.5rem">Матовые или бронзер. Глянцевые румяна не брать.</p></div>
+      <div class="col"><h3>Помада</h3>
+        <div class="sw"><div style="width:44px"><b style="background:#CC2020;height:34px"></b></div><div style="width:44px"><b style="background:#C04048;height:34px"></b></div><div style="width:44px"><b style="background:#B85458;height:34px"></b></div><div style="width:44px"><b style="background:#C06A50;height:34px"></b></div></div>
+        <p class="note" style="margin-top:.5rem">Бархатные, сатиновые, глянцевые, масла для губ. Матовые тёмные не подходят.</p></div>
+      <div class="col"><h3>Контур и тон</h3>
+        <div class="sw"><div style="width:44px"><b style="background:#84470E;height:34px"></b></div><div style="width:44px"><b style="background:#A85A18;height:34px"></b></div><div style="width:44px"><b style="background:#8C4A00;height:34px"></b></div></div>
+        <p class="note" style="margin-top:.5rem">Тёплый карамельный контур. Тон нейтральный, финиш матовый или сатиновый, глянец только акцентами.</p></div>
+    </div>
+    <div class="cols">
+      <div class="col"><h3>Глаза и ресницы</h3><ul>
+        <li>стрелки: лисий, кошачий и шенячий разрез подходят</li>
+        <li>ресницы: Winx и Cat eye</li>
+        <li>линзы: Monica Brown, Iced White Peach</li>
+      </ul></div>
+      <div class="col"><h3>Продукты из твоего списка</h3><ul>
+        <li>румяна: Nuse Mousse Care Cheek 03, Flower Knows Garden Picnic</li>
+        <li>контур: Colorgram Re-forming Contour Stick 01 и 03</li>
+        <li>глаза: Flower Knows Sweety Bear 01, Wakemake 24</li>
+        <li>брови: Novo Eyebrow Tint 01, Peripera Browscara 04</li>
+        <li>губы: Black Rouge Boki Tint GB01, Nuse Care Liptual 03</li>
+        <li>база: Nuse Tone Up Cream 02, Tfit Cover Up Pro 03</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="pinterest">
+  <h2>Pinterest-поиск</h2>
+  <div class="body">
+    <div>
+      <h3>Запросы для поиска образов</h3>
+      <p class="note">Pinterest лучше отвечает на английский. Нажми «Копировать» и вставь в поиск.</p>
+      <div id="queries"></div>
+    </div>
+    <div>
+      <h3>Проверь найденный образ</h3>
+      <ul class="check" id="check"></ul>
+      <div class="score" id="score" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<footer>Собрано из материалов Yescolor (True Autumn) и презентации по кибби (Натурал-романтик). Цвета на экране приблизительные.</footer>
+</div>
+
+<script>
+var Q = [
+  "warm autumn romantic outfit flowy skirt terracotta",
+  "true autumn soft romantic style olive green dress",
+  "natural romantic outfit ruffles lace warm tones",
+  "boho romantic floral dress warm earthy colors",
+  "chocolate brown satin slip dress matte",
+  "caramel velvet blouse with bow soft feminine",
+  "warm autumn makeup terracotta eyeshadow soft glam",
+  "warm brunette hair copper balayage long waves",
+  "hollywood waves dark brown hair warm",
+  "amber gold chunky jewelry floral earrings warm",
+  "осенний романтичный образ юбка макси терракота",
+  "платье оливковое струящееся образ тёплая осень"
+];
+var C = [
+  "Цвет из палитры: тёплый, насыщенный, не холодный и не неоновый",
+  "Силуэт свободный или мягко облегающий, без острых линий",
+  "Ткань с мягкой фактурой, без холодного глянца",
+  "Принт цветочный, растительный или мягкий леопард",
+  "Украшения: тёплое золото или медь, мягкие формы",
+  "Вырез и воротник мягкие: сердечко, круглый, бант, жабо",
+  "Волосы и макияж в тёплой гамме"
+];
+function copy(text, btn){
+  var done=function(){var o=btn.textContent;btn.textContent="Скопировано";setTimeout(function(){btn.textContent=o},1400)};
+  var fallback=function(){var t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();try{document.execCommand("copy");done()}catch(e){}document.body.removeChild(t)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,fallback)}else{fallback()}
+}
+var qEl=document.getElementById("queries");
+Q.forEach(function(q){
+  var d=document.createElement("div");d.className="q";
+  var s=document.createElement("span");s.textContent=q;
+  var b=document.createElement("button");b.type="button";b.textContent="Копировать";
+  b.addEventListener("click",function(){copy(q,b)});
+  d.appendChild(s);d.appendChild(b);qEl.appendChild(d);
+});
+var cEl=document.getElementById("check"),sc=document.getElementById("score");
+function upd(){
+  var n=cEl.querySelectorAll("input:checked").length;
+  sc.textContent=n===0?"":n+" из "+C.length+(n>=6?": твой образ":n>=4?": можно взять с правками":": лучше пропустить");
+}
+C.forEach(function(t,i){
+  var li=document.createElement("li");
+  var l=document.createElement("label");
+  var inp=document.createElement("input");inp.type="checkbox";inp.id="c"+i;
+  inp.addEventListener("change",upd);
+  var sp=document.createElement("span");sp.textContent=t;
+  l.appendChild(inp);l.appendChild(sp);li.appendChild(l);cEl.appendChild(li);
+});
+</script>
